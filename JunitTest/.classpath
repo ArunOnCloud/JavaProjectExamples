@@ -3,5 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple-1.1.jar" sourcepath="C:/Users/arunram/AppData/Local/Temp/decompiler/source/json-simple-1.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/assertj-core-1.7.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
