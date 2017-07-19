@@ -35,7 +35,9 @@ public class TestApi {
 	 @Test
 	 public void apiTesting() throws Exception {
 		 HttpRequest http = new HttpRequest();
-		 String url="http://cardev.policybazaar.com:8080/api/productInfo/849/?enquiryId=OTI0NTUy&tabName=allPlans&isMulti=false&incomeTerm=20&increasingIncomePercentage=0&monthlyIncome=&oneTimePayout=&v=1500356277653";
+		 //String url="http://cardev.policybazaar.com:8080/api/productInfo/849/?enquiryId=OTI0NTUy&tabName=allPlans&isMulti=false&incomeTerm=20&increasingIncomePercentage=0&monthlyIncome=&oneTimePayout=&v=1500356277653";
+		 //String url="http://cardev.policybazaar.com:8080/api/productInfo/854/?enquiryId=OTI1MDI2&tabName=allPlans&isMulti=false&isAlreadyExist=false&incomeTerm=20&increasingIncomePercentage=0&monthlyIncome=&oneTimePayout=&variantPlanId=0&v=1500381932220";
+		 String url="http://cardev.policybazaar.com:8080/api/productInfo/852/?enquiryId=OTI1MDE5&tabName=onetimePlans&isMulti=false&incomeTerm=20&increasingIncomePercentage=0&monthlyIncome=&oneTimePayout=&variantPlanId=0&v=1500384062398";
 		 String str=http.sendGet(url,"");
 		 JSONObject obj=new JSONObject();
 		 JSONParser parser=new JSONParser();
@@ -48,14 +50,31 @@ public class TestApi {
 			 JSONObject supplierPlan=(JSONObject) arr.get(i);
 			 JSONArray planDetails=(JSONArray)supplierPlan.get("planDetails");
 			 JSONObject planDetail=(JSONObject) planDetails.get(0);
-			 int finalPremium=Integer.parseInt((planDetail.get("finalPremium")).toString());
-			 int annualPremiumWGST=Integer.parseInt((planDetail.get("annualPremiumWGST")).toString());
-			 int annualPremiumGST=Integer.parseInt((planDetail.get("annualPremiumGST")).toString());
-			// System.out.println("finalPremium:"+finalPremium);
-			// System.out.println("annualPremiumWGST:"+annualPremiumWGST);
-			// System.out.println("annualPremiumGST:"+annualPremiumGST);
-			 //assertEquals(finalPremium,(annualPremiumGST+annualPremiumWGST));
-			 collector.checkThat("plan Id: "+planDetail.get("planId")+ " basePlanId:"+planDetail.get("basePlanId") ,finalPremium, CoreMatchers.equalTo((annualPremiumGST+annualPremiumWGST)));
+			 double finalPremium=Double.parseDouble((planDetail.get("finalPremium")).toString());
+			 double annualPremiumWGST=Double.parseDouble((planDetail.get("annualPremiumWGST")).toString());
+			 double annualPremiumGST=Double.parseDouble((planDetail.get("annualPremiumGST")).toString());
+			
+			 collector.checkThat("annualPremium plan Id: "+planDetail.get("planId")+ " basePlanId:"+planDetail.get("basePlanId") ,finalPremium, CoreMatchers.equalTo((annualPremiumGST+annualPremiumWGST)));
+			 
+			 double halfYearlyTotalPremium=Double.parseDouble((planDetail.get("halfYearlyTotalPremium")).toString());
+			 double halfYearlyPremiumWGST=Double.parseDouble((planDetail.get("halfYearlyPremiumWGST")).toString());
+			 double halfYearlyPremiumGST=Double.parseDouble((planDetail.get("halfYearlyPremiumGST")).toString());
+			
+			 collector.checkThat("halfYearlyPremium plan Id: "+planDetail.get("planId")+ " basePlanId:"+planDetail.get("basePlanId") ,halfYearlyTotalPremium, CoreMatchers.equalTo((halfYearlyPremiumWGST+halfYearlyPremiumGST)));
+			 
+			 double monthlyTotalPremium=Double.parseDouble((planDetail.get("monthlyTotalPremium")).toString());
+			 double monthlyPremiumWGST=Double.parseDouble((planDetail.get("monthlyPremiumWGST")).toString());
+			 double monthlyPremiumGST=Double.parseDouble((planDetail.get("monthlyPremiumGST")).toString());
+			
+			 collector.checkThat("monthlyPremium plan Id: "+planDetail.get("planId")+ " basePlanId:"+planDetail.get("basePlanId") ,monthlyTotalPremium, CoreMatchers.equalTo((monthlyPremiumGST+monthlyPremiumWGST)));
+			 
+			 double quarterlyTotalPremium=Double.parseDouble((planDetail.get("quarterlyTotalPremium")).toString());
+			 double quarterlyPremiumWGST=Double.parseDouble((planDetail.get("quarterlyPremiumWGST")).toString());
+			 double quarterlyPremiumGST=Double.parseDouble((planDetail.get("quarterlyPremiumGST")).toString());
+			
+			 collector.checkThat("quarterlyPremium plan Id: "+planDetail.get("planId")+ " basePlanId:"+planDetail.get("basePlanId") ,quarterlyTotalPremium, CoreMatchers.equalTo((quarterlyPremiumGST+quarterlyPremiumWGST)));
+			 
+			 
 			 //testAdd();
 			 
 		 }
